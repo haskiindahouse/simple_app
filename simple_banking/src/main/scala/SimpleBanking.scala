@@ -1,0 +1,4 @@
+
+object SimpleBanking extends App {
+
+}
