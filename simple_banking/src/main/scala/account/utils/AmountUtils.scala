@@ -4,6 +4,7 @@ import eu.timepit.refined.api.{Refined, Validate}
 import eu.timepit.refined.numeric.Positive
 import eu.timepit.refined.refineV
 
+
 object AmountUtils {
   trait RefinedNewType[A] {
     type Valid
@@ -24,7 +25,13 @@ object AmountUtils {
   type DebitAmount = DebitAmount.Type
 
   object CreditAmount extends RefinedNewType[Long] {
-    type Valid = Long
+    case class Valid()
+
+    implicit val validateCreditAmount: Validate.Plain[Long, Valid] = Validate.fromPredicate(
+      value => value >= Long.MinValue && value <= Long.MaxValue,
+      value => s"$value is not a valid CreditAmount",
+      CreditAmount.Valid()
+    )
   }
   type CreditAmount = CreditAmount.Type
 

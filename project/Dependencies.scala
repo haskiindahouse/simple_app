@@ -8,6 +8,7 @@ object Dependencies  {
   private val refined = "0.11.0"
   private val scalamock = "5.2.0"
   private val scalatest = "3.2.15"
+  private val http4s = "0.22.4"
 
   object BankingDependencies extends VersionedDependenciesSource {
 
@@ -19,7 +20,11 @@ object Dependencies  {
       "tf.tofu" %% "derevo-pureconfig" %  derevo,
       "tf.tofu" %% "derevo-tethys" % derevo,
       "tf.tofu" %% "derevo-cats-tagless" % derevo,
-      "tf.tofu" %% "derevo-scalacheck" % derevo
+      "tf.tofu" %% "derevo-scalacheck" % derevo,
+
+      // http4s
+      "org.http4s" %% "http4s-ember-server" % http4s,
+      "org.http4s" %% "http4s-dsl" % http4s
     )
 
     override protected def testDependencies: Seq[ModuleID] = Seq(
