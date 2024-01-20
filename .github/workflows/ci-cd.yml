@@ -1,5 +1,14 @@
-  # uses: openlawteam/scalafmt-ci@2688abc88101f179a5a540a59db9da98908e8115
-  uses: openlawteam/scalafmt-ci@v2.0.2
-  with:
-    # Args to pass to scalafmt
-    args: # optional, default is --list
+name: Check scalafmt on push
+on: [push]
+
+jobs:
+  scalafmt-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Checking your code to see if u r naughty or nice
+        uses: openlawteam/scalafmt-ci@v2
+        with:
+          args: "--exclude=third_party --list"
