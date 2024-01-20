@@ -7,7 +7,7 @@ import eu.timepit.refined.refineV
 
 import scala.concurrent.Future
 
-case class DebitAccount(balance: DebitAmount) extends Account[DebitAmount] {
+case class DebitAccount(id: String, balance: DebitAmount) extends Account[DebitAmount] {
 
   import scala.concurrent.ExecutionContext.Implicits.global
 

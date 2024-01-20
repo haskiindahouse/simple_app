@@ -15,7 +15,7 @@ class DebitAccountSpec extends AnyFunSpec with Matchers {
     def testReplenishment(initialBalance: Long, amount: Long, expectedBalance: Long): Unit = {
       it(s"should replenish $amount to $initialBalance resulting in $expectedBalance") {
         val account = DebitAmount(initialBalance) match {
-          case Right(validAmount) => DebitAccount(validAmount)
+          case Right(validAmount) => DebitAccount("1", validAmount)
           case Left(error) => fail(s"Invalid initial balance: $error")
         }
         val replenishAmount = DebitAmount(amount).getOrElse(fail("Invalid replenish amount"))
@@ -29,7 +29,7 @@ class DebitAccountSpec extends AnyFunSpec with Matchers {
       it(s"should ${if (!isAllowed) "not " else ""}allow withdrawal of $amount from $initialBalance") {
         val initialAmount = DebitAmount(initialBalance).getOrElse(fail("Invalid initial balance"))
         val withdrawalAmount = DebitAmount(amount).getOrElse(fail("Invalid withdrawal amount"))
-        val account = DebitAccount(initialAmount)
+        val account = DebitAccount("1", initialAmount)
 
         val futureResult = account.withdrawal(withdrawalAmount).map(Some(_)).recover {
           case NonFatal(_) => None

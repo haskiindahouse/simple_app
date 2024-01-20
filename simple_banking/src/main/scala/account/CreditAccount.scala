@@ -1,12 +1,12 @@
 package account
 
-import account.exception.CreditLimitException
+import account.exception.{CreditLimitException, IllegalAmountException}
 import account.utils.AmountUtils.{CreditAmount, CreditLimit}
 import eu.timepit.refined.refineV
 
 import scala.concurrent.Future
 
-case class CreditAccount(balance: CreditAmount, limit: CreditLimit) extends Account[CreditAmount] {
+case class CreditAccount(id: String, balance: CreditAmount, limit: CreditLimit) extends Account[CreditAmount] {
 
   import scala.concurrent.ExecutionContext.Implicits.global
 

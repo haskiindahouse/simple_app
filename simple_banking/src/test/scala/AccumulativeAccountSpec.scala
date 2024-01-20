@@ -16,8 +16,8 @@ class AccumulativeAccountSpec extends AnyFunSpec with Matchers with ScalaFutures
 
     def testReplenishment(initialBalance: Long, amount: Long, interestRate: Double, expectedBalance: Long): Unit = {
       it(s"should replenish $amount to an account with initial balance $initialBalance and interest rate $interestRate resulting in $expectedBalance") {
-        val account = AccumulativeAmount(initialBalance).right.flatMap { initialAmount =>
-          Right(AccumulativeAccount(initialAmount, interestRate))
+        val account = AccumulativeAmount(initialBalance).flatMap { initialAmount =>
+          Right(AccumulativeAccount("1", initialAmount, interestRate))
         }.getOrElse(fail("Invalid initial balance"))
         val replenishedAccount = account.replenishment(AccumulativeAmount(amount).getOrElse(fail("Invalid replenish amount")))
         replenishedAccount.balance.value shouldBe expectedBalance
@@ -26,8 +26,8 @@ class AccumulativeAccountSpec extends AnyFunSpec with Matchers with ScalaFutures
 
     def testWithdrawal(initialBalance: Long, amount: Long, interestRate: Double, isAllowed: Boolean): Unit = {
       it(s"should ${if (!isAllowed) "not " else ""}allow withdrawal of $amount from an account with initial balance $initialBalance and interest rate $interestRate") {
-        val account = AccumulativeAmount(initialBalance).right.flatMap { initialAmount =>
-          Right(AccumulativeAccount(initialAmount, interestRate))
+        val account = AccumulativeAmount(initialBalance).flatMap { initialAmount =>
+          Right(AccumulativeAccount("1", initialAmount, interestRate))
         }.getOrElse(fail("Invalid initial balance"))
         val withdrawalAmount = AccumulativeAmount(amount).getOrElse(fail("Invalid withdrawal amount"))
 
@@ -48,8 +48,8 @@ class AccumulativeAccountSpec extends AnyFunSpec with Matchers with ScalaFutures
 
     def testApplyInterest(initialBalance: Long, interestRate: Double, expectedBalance: Long): Unit = {
       it(s"should apply an interest rate of $interestRate to an account with initial balance $initialBalance resulting in $expectedBalance") {
-        val account = AccumulativeAmount(initialBalance).right.flatMap { initialAmount =>
-          Right(AccumulativeAccount(initialAmount, interestRate))
+        val account = AccumulativeAmount(initialBalance).flatMap { initialAmount =>
+          Right(AccumulativeAccount("1", initialAmount, interestRate))
         }.getOrElse(fail("Invalid initial balance"))
 
         val accountWithInterest = account.applyInterest()

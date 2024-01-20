@@ -6,7 +6,7 @@ import eu.timepit.refined.refineV
 
 import scala.concurrent.Future
 
-case class AccumulativeAccount(balance: AccumulativeAmount, interestRate: Double) extends Account[AccumulativeAmount] {
+case class AccumulativeAccount(id: String, balance: AccumulativeAmount, interestRate: Double) extends Account[AccumulativeAmount] {
 
   import scala.concurrent.ExecutionContext.Implicits.global
 

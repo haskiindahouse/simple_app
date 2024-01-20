@@ -18,7 +18,7 @@ class CreditAccountSpec extends AnyFunSpec with Matchers with ScalaFutures {
         val account = for {
           initialAmount <- CreditAmount(initialBalance)
           creditLimit <- CreditLimit(limit)
-        } yield CreditAccount(initialAmount, creditLimit)
+        } yield CreditAccount("1", initialAmount, creditLimit)
 
         account match {
           case Right(acc) =>
@@ -32,9 +32,9 @@ class CreditAccountSpec extends AnyFunSpec with Matchers with ScalaFutures {
     def testWithdrawal(initialBalance: Long, amount: Long, limit: Long, isAllowed: Boolean): Unit = {
       it(s"should ${if (!isAllowed) "not " else ""}allow withdrawal of $amount from an account with initial balance $initialBalance and limit $limit") {
         val account = for {
-          initialAmount <- CreditAmount(initialBalance).right
-          creditLimit <- CreditLimit(limit).right
-        } yield CreditAccount(initialAmount, creditLimit)
+          initialAmount <- CreditAmount(initialBalance)
+          creditLimit <- CreditLimit(limit)
+        } yield CreditAccount("1", initialAmount, creditLimit)
 
         account match {
           case Right(acc) =>
